@@ -42,6 +42,8 @@ void Ball::setGravity(float g) {
 	m_gravity = g;
 }
 void Ball::update(float dt) {
+	m_xVel *= 0.999f;
+	m_yVel *= 0.999f;
 
 	m_xPos += m_xVel * dt;
 	m_yPos += m_yVel * dt;

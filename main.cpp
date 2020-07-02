@@ -6,6 +6,7 @@
 #include <cstdio>
 #include <cstdlib>
 #include <ctime>
+#include <list>
 #include "Ball.h"
 #include "Rect.h"
 #include "Cannon.h"
@@ -20,8 +21,9 @@ float dt;
 float pos;
 float vel;
 char* s;
-const int maxBall = 5; // 100 350fps; //250 100fps
-Ball* ball[maxBall];
+const int maxBall = 2; // 100 350fps; //250 100fps
+//Ball* ball[maxBall];
+list < Ball* > ball;
 Rect* rect1;
 Cannon* cannon;
 
@@ -129,10 +131,11 @@ bool init()
 	cannon = new Cannon(new vector2(0, 0),new  vector2(1.5f, 1.5f));
 
 	for (int i = 0; i < maxBall; i++) {
-		ball[i] = new Ball(0.5f);
-		ball[i]->setPosition(-5 + (rand() / (float)RAND_MAX) * 10, -5 + (rand() / (float)RAND_MAX) * 10, 0.0f);
-		ball[i]->setInitVel(rand() / (float)RAND_MAX, rand() / (float)RAND_MAX, 0.0f);
-		ball[i]->setGravity(-i);
+		Ball* aux = new Ball(0.5f);
+		aux->setPosition(-5 + (rand() / (float)RAND_MAX) * 10, -5 + (rand() / (float)RAND_MAX) * 10, 0.0f);
+		aux->setInitVel(rand() / (float)RAND_MAX, rand() / (float)RAND_MAX, 0.0f);
+		aux->setGravity(-i);
+		ball.push_back(aux);
 	}
 
 
@@ -162,26 +165,44 @@ void keyboard(unsigned char key, int x, int y)
 {
 	if (key == 27)
 		dt = 0;
+	if (key == 'd') {
+		cannon->aimRotate(7*3.1415926535/180);
+	}
+	if (key == 'a') {
+		cannon->aimRotate(-7 * 3.1415926535 / 180);
+	}
 	if (key == ' ') {
-		pos = 10;
-		vel = 0;
-
+		cannon->shoot(ball);
 	}
 }
 
 void updateData(float dt) {
 
-		rect1->resetColor();
-	for (int i = 0; i < maxBall; i++) {
-		ball[i]->resetColor();
-		ball[i]->update(dt);
-		rect1->isCollision(ball[i]);
-		//FrameNumer Frame ID
-		for (int d = 0; d < maxBall; d++) {
-			if (i == d)continue;
-			ball[i]->isCollision(ball[d]);
+	rect1->resetColor();
+	
+	//for (int i = 0; i < maxBall; i++) {
+	//	ball[i]->resetColor();
+	//	ball[i]->update(dt);
+	//	rect1->isCollision(ball[i]);
+	//	//FrameNumer Frame ID
+	//	for (int d = 0; d < maxBall; d++) {
+	//		if (i == d)continue;
+	//		ball[i]->isCollision(ball[d]);
+	//	}
+	//}
+
+	list <Ball*>::iterator it;
+	for (it = ball.begin(); it != ball.end(); ++it) {
+		(*it)->resetColor();
+		(*it)->update(dt);
+		rect1->isCollision((*it));
+		list <Ball*>::iterator s_it;
+		for (s_it = ball.begin(); s_it != ball.end(); ++s_it) {
+			if (s_it == it)continue;
+			(*it)->isCollision(*s_it);
 		}
 	}
+
 }
 
 
@@ -194,8 +215,13 @@ void draw() {
 
 	gluLookAt(0, 0, 15, 0, 0, 0, 0, 1, 0);
 
-	for (int i = 0; i < maxBall; i++) {
+	/*for (int i = 0; i < maxBall; i++) {
 		ball[i]->draw();
+	}*/
+
+	list <Ball*>::iterator it;
+	for (it = ball.begin(); it != ball.end(); ++it) {
+		(*it)->draw();
 	}
 
 	rect1->draw();
@@ -233,12 +259,17 @@ void mouse(int button, int state, int x, int y) {
 			}
 			else if (x > 260 && x < 535) {
 				cout << "central Side" << endl;
-				for (int i = 0; i < maxBall; i++) {
+				/*for (int i = 0; i < maxBall; i++) {
 					ball[i]->restart();
 					ball[i]->setPosition(-5 + (rand() / (float)RAND_MAX) * 10, -5 + (rand() / (float)RAND_MAX) * 10, 0.0f);
 					ball[i]->setInitVel(rand() / (float)RAND_MAX, rand() / (float)RAND_MAX, 0.0f);
+				}*/
+				list <Ball*>::iterator it;
+				for (it = ball.begin(); it != ball.end(); ++it) {
+					(*it)->restart();
+					(*it)->setPosition(-5 + (rand() / (float)RAND_MAX) * 10, -5 + (rand() / (float)RAND_MAX) * 10, 0.0f);
+					(*it)->setInitVel(rand() / (float)RAND_MAX, rand() / (float)RAND_MAX, 0.0f);
 				}
-				rect1->resetColor();
 			}
 			else
 			{
