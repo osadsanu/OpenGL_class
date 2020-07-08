@@ -21,7 +21,7 @@ float dt;
 float pos;
 float vel;
 char* s;
-const int maxBall = 2; // 100 350fps; //250 100fps
+const int maxBall = 1; // 100 350fps; //250 100fps
 //Ball* ball[maxBall];
 list < Ball* > ball;
 Rect* rect1;
@@ -166,10 +166,10 @@ void keyboard(unsigned char key, int x, int y)
 	if (key == 27)
 		dt = 0;
 	if (key == 'd') {
-		cannon->aimRotate(7*3.1415926535/180);
+		cannon->aimRotate(2 *3.1415926535/180);
 	}
 	if (key == 'a') {
-		cannon->aimRotate(-7 * 3.1415926535 / 180);
+		cannon->aimRotate(-2 * 3.1415926535 / 180);
 	}
 	if (key == ' ') {
 		cannon->shoot(ball);
@@ -203,6 +203,8 @@ void updateData(float dt) {
 		}
 	}
 
+	cannon->update(dt);
+
 }
 
 
@@ -224,7 +226,8 @@ void draw() {
 		(*it)->draw();
 	}
 
-	rect1->draw();
+	//rect1->draw();
+	
 	cannon->draw();
 
 	glutSwapBuffers();
