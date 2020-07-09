@@ -10,6 +10,7 @@
 #include "Ball.h"
 #include "Rect.h"
 #include "Cannon.h"
+#include "Tank.h"
 
 using namespace std;
 
@@ -26,6 +27,7 @@ const int maxBall = 2; // 100 350fps; //250 100fps
 list < Ball* > ball;
 Rect* rect1;
 Cannon* cannon;
+Tank* tank;
 
 
 const GLfloat light_ambient[] = { 0.0f, 0.0f, 0.0f, 1.0f };
@@ -129,6 +131,7 @@ bool init()
 	s = new char[16];
 	rect1 = new Rect(0, 0, 3, 2);
 	cannon = new Cannon(new vector2(0, 0),new  vector2(1.5f, 1.5f));
+	tank = new Tank(new vector2(3, 2), new  vector2(2.5f, 2.5f));
 
 	for (int i = 0; i < maxBall; i++) {
 		Ball* aux = new Ball(0.5f);
@@ -174,11 +177,24 @@ void keyboard(unsigned char key, int x, int y)
 	if (key == ' ') {
 		cannon->shoot(ball);
 	}
+	if (key == 'D') {
+		tank->move(1, 0);
+	}
+	if (key == 'A') {
+		tank->move(-1, 0);
+	}
+
+	if (key == 'W') {
+		tank->move(0, 1);
+	}
+	if (key == 'S') {
+		tank->move(0, -1);
+	}
 }
 
 void updateData(float dt) {
 
-	rect1->resetColor();
+	//rect1->resetColor();
 	
 	//for (int i = 0; i < maxBall; i++) {
 	//	ball[i]->resetColor();
@@ -202,7 +218,8 @@ void updateData(float dt) {
 			(*it)->isCollision(*s_it);
 		}
 	}
-
+	cannon->update(dt);
+	tank->update(dt);
 }
 
 
@@ -224,8 +241,9 @@ void draw() {
 		(*it)->draw();
 	}
 
-	rect1->draw();
+	
 	cannon->draw();
+	tank->draw();
 
 	glutSwapBuffers();
 

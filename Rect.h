@@ -16,8 +16,8 @@ public:
 	void resetColor();
 
 	vector2* m_P1, * m_P2, * m_P3, * m_P4;
-private:
 	vector2* m_pos;
+private:
 
 
 	float m_colorR, m_colorG, m_colorB;

@@ -43,3 +43,7 @@ inline vector2 rotateAroundPt(float angle, vector2* point, vector2* root)
 	return (vector2(xf, yf));
 
 }
+
+inline bool equalFloat(float A, float B, float limit = 0.01f) {
+	return (fabs(A - B) < limit);
+}

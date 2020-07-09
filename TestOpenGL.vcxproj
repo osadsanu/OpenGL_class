@@ -148,12 +148,14 @@
     <ClCompile Include="Cannon.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Rect.cpp" />
+    <ClCompile Include="Tank.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Ball.h" />
     <ClInclude Include="Breaker.h" />
     <ClInclude Include="Cannon.h" />
     <ClInclude Include="Rect.h" />
+    <ClInclude Include="Tank.h" />
     <ClInclude Include="Vector.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
