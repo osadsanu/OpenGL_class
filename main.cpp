@@ -168,10 +168,10 @@ void keyboard(unsigned char key, int x, int y)
 {
 	if (key == 27)
 		dt = 0;
-	if (key == 'd') {
+	if (key == 'Q') {
 		cannon->aimRotate(7*3.1415926535/180);
 	}
-	if (key == 'a') {
+	if (key == 'E') {
 		cannon->aimRotate(-7 * 3.1415926535 / 180);
 	}
 	if (key == ' ') {

@@ -10,7 +10,29 @@ public:
 		y = Y;
 	}
 	float x, y;
-
+	vector2 operator + (const vector2& b) {
+		vector2 aux;
+		aux.x = this->x + b.x;
+		aux.y = this->y + b.y;
+		return aux;
+	}vector2 operator - (const vector2& b) {
+		vector2 aux;
+		aux.x = this->x - b.x;
+		aux.y = this->y - b.y;
+		return aux;
+	}
+	vector2 operator * (const vector2& b) {
+		vector2 aux;
+		aux.x = this->x * b.x;
+		aux.y = this->y * b.y;
+		return aux;
+	}
+	vector2 operator * (const float& b) {
+		vector2 aux;
+		aux.x = this->x * x;
+		aux.y = this->y * y;
+		return aux;
+	}
 	
 private:
 };
