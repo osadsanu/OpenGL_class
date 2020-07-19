@@ -2,7 +2,7 @@
 #include <GL\freeglut.h>
 #include <cmath>
 #include <iostream>
-#define steps 30
+#define steps 10
 #define PI 3.14159264f
 #define PI2 3.14159264f*2
 Ball::Ball(float size) {
@@ -47,6 +47,22 @@ void Ball::update(float dt) {
 
 	m_xPos += m_xVel * dt;
 	m_yPos += m_yVel * dt;
+
+	if (followActive) {
+		if (m_xPos < m_targetX) {
+			m_xVel = 1;
+		}
+		else {
+			m_xVel = - 1; //Random!
+		}
+
+		if (m_yPos < m_targetY) {
+			m_yVel = 1;
+		}
+		else {
+			m_yVel = -1;
+		}
+	}
 	//Using Gravity
 	/*
 	if (m_yPos> 0) {
@@ -57,6 +73,10 @@ void Ball::update(float dt) {
 		m_yPos = 0;
 	}
 	*/
+}
+void Ball::setTarget(float xPos, float yPos) {
+	m_targetX = xPos;
+	m_targetY = yPos;
 }
 
 bool Ball::isCollision(Ball* ex_ball) {

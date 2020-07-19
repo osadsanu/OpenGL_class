@@ -8,8 +8,8 @@ public:
 	void draw();
 	void update(float dt);
 	void move(float x, float y);
-private:
 	vector2 *m_pos;
+private:
 	vector2* m_CurrentPos;
 	Rect* m_base;
 

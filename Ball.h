@@ -16,8 +16,11 @@ public:
 	float m_size;
 	float m_xPos, m_yPos;
 	float m_colorR, m_colorG, m_colorB;
-private:
 
+	void setTarget(float xPos, float yPos);
+	bool followActive;
+private:
+	float m_targetX, m_targetY;
 	float m_objX[steps], m_objY[steps];
 	float m_xPosInit, m_yPosInit;
 	float m_xVel, m_yVel;
